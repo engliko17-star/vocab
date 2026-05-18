@@ -19,7 +19,7 @@
 
 body{
   font-family:'Inter',sans-serif;
-  background:#f3f5fb;
+  background:#f4f7fb;
   color:#111827;
 }
 
@@ -36,14 +36,12 @@ body{
   border-right:1px solid #e5e7eb;
   padding:30px 20px;
   position:fixed;
-  top:0;
-  left:0;
   height:100vh;
-  z-index:10;
+  overflow:auto;
 }
 
 .logo{
-  font-size:42px;
+  font-size:38px;
   font-weight:800;
   color:#2563eb;
   margin-bottom:40px;
@@ -61,10 +59,10 @@ body{
   padding:14px 18px;
   border-radius:16px;
   text-align:left;
-  font-weight:600;
+  font-weight:700;
+  color:#6b7280;
   cursor:pointer;
   transition:0.2s;
-  color:#6b7280;
   font-size:15px;
 }
 
@@ -85,6 +83,8 @@ body{
   width:calc(100% - 250px);
 }
 
+/* TOPBAR */
+
 .topbar{
   height:90px;
   background:white;
@@ -92,18 +92,18 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 32px;
+  padding:0 34px;
 }
 
 .search{
   width:360px;
-  border:none;
-  background:#f3f5fb;
-  border-radius:16px;
   height:48px;
+  border:none;
+  border-radius:16px;
+  background:#f4f7fb;
   padding:0 18px;
-  font-size:15px;
   outline:none;
+  font-size:15px;
 }
 
 .top-actions{
@@ -116,7 +116,7 @@ body{
   border:none;
   background:#2563eb;
   color:white;
-  padding:14px 22px;
+  padding:14px 20px;
   border-radius:16px;
   font-weight:700;
   cursor:pointer;
@@ -128,16 +128,18 @@ body{
 }
 
 .avatar{
-  width:44px;
-  height:44px;
+  width:46px;
+  height:46px;
   border-radius:50%;
   background:#dbeafe;
   display:flex;
   align-items:center;
   justify-content:center;
   color:#2563eb;
-  font-weight:700;
+  font-weight:800;
 }
+
+/* CONTENT */
 
 .content{
   padding:36px;
@@ -147,40 +149,41 @@ body{
 
 .hero{
   background:linear-gradient(135deg,#2563eb,#60a5fa);
-  border-radius:36px;
-  padding:46px;
+  border-radius:34px;
+  padding:42px;
   color:white;
-  margin-bottom:40px;
+  margin-bottom:38px;
 }
 
 .hero h1{
-  font-size:58px;
+  font-size:52px;
   margin-bottom:12px;
 }
 
 .hero p{
   font-size:18px;
   opacity:0.95;
+  line-height:1.7;
 }
 
 /* SECTION */
 
 .section{
-  margin-top:44px;
+  margin-top:46px;
 }
 
 .section-title{
-  font-size:42px;
+  font-size:34px;
   font-weight:800;
   margin-bottom:24px;
 }
 
-/* CATEGORIES */
+/* CATEGORY GRID */
 
 .categories-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:24px;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:22px;
 }
 
 .category-card{
@@ -189,93 +192,139 @@ body{
   padding:28px;
   cursor:pointer;
   transition:0.25s;
-  box-shadow:0 6px 20px rgba(0,0,0,0.03);
+  position:relative;
+  overflow:hidden;
+}
+
+.category-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(37,99,235,0.08),transparent);
 }
 
 .category-card:hover{
-  transform:translateY(-6px);
+  transform:translateY(-5px);
+  box-shadow:0 18px 40px rgba(37,99,235,0.08);
 }
 
 .category-icon{
-  font-size:42px;
+  font-size:38px;
   margin-bottom:18px;
+  position:relative;
 }
 
 .category-title{
-  font-size:28px;
-  font-weight:700;
-  margin-bottom:10px;
+  font-size:24px;
+  font-weight:800;
+  margin-bottom:8px;
+  position:relative;
 }
 
 .category-count{
   color:#6b7280;
+  position:relative;
 }
 
 /* WORDS */
 
 .words-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
-  gap:26px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:22px;
 }
 
 .word-card{
   background:white;
-  border-radius:32px;
-  padding:28px;
-  transition:0.25s;
+  border-radius:28px;
+  padding:24px;
   cursor:pointer;
+  transition:0.25s;
   position:relative;
   overflow:hidden;
-  box-shadow:0 10px 30px rgba(0,0,0,0.04);
-}
-
-.word-card:hover{
-  transform:translateY(-6px);
+  border:1px solid #eef2f7;
 }
 
 .word-card::before{
-  content:"";
+  content:'';
   position:absolute;
   top:0;
   left:0;
   width:100%;
-  height:6px;
+  height:5px;
   background:linear-gradient(90deg,#2563eb,#60a5fa);
+}
+
+.word-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 40px rgba(0,0,0,0.06);
 }
 
 .word-top{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  margin-bottom:22px;
+  align-items:center;
+  margin-bottom:18px;
 }
 
 .word-tag{
-  display:inline-flex;
-  padding:8px 14px;
-  border-radius:999px;
   background:#eef4ff;
   color:#2563eb;
-  font-size:13px;
+  padding:7px 14px;
+  border-radius:999px;
+  font-size:12px;
   font-weight:700;
+}
+
+.favorite-icon{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background:#fff7ed;
+  color:#f59e0b;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+}
+
+.word-title{
+  font-size:32px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+.word-type{
+  color:#6b7280;
+  margin-bottom:18px;
+  font-size:14px;
+}
+
+.word-short{
+  color:#4b5563;
+  line-height:1.7;
+  font-size:15px;
+  margin-bottom:24px;
+  min-height:52px;
 }
 
 .word-actions{
   display:flex;
-  align-items:center;
-  gap:10px;
+  gap:12px;
 }
 
-.icon-btn{
-  width:46px;
-  height:46px;
+.action-btn{
+  flex:1;
   border:none;
+  padding:14px;
   border-radius:14px;
-  cursor:pointer;
-  font-size:18px;
   font-weight:700;
+  cursor:pointer;
   transition:0.2s;
+}
+
+.action-btn:hover{
+  transform:translateY(-2px);
 }
 
 .favorite-btn{
@@ -283,8 +332,9 @@ body{
   color:#ea580c;
 }
 
-.favorite-btn:hover{
-  transform:scale(1.08);
+.favorite-btn.active{
+  background:#f59e0b;
+  color:white;
 }
 
 .list-btn{
@@ -292,48 +342,31 @@ body{
   color:#2563eb;
 }
 
-.list-btn:hover{
-  transform:scale(1.08);
-}
-
-.word-title{
-  font-size:52px;
-  font-weight:800;
-  margin-bottom:10px;
-  line-height:1;
-}
-
-.word-type{
-  color:#6b7280;
-  font-size:20px;
-  margin-bottom:20px;
-}
-
-.word-short{
-  font-size:20px;
-  line-height:1.7;
-  color:#4b5563;
-}
-
 /* LISTS */
 
 .lists-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
-  gap:24px;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:22px;
 }
 
 .list-card{
   background:white;
-  border-radius:30px;
+  border-radius:28px;
   padding:28px;
-  box-shadow:0 8px 24px rgba(0,0,0,0.04);
+  cursor:pointer;
+  transition:0.25s;
+}
+
+.list-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 40px rgba(0,0,0,0.05);
 }
 
 .list-title{
-  font-size:30px;
-  font-weight:700;
-  margin-bottom:12px;
+  font-size:26px;
+  font-weight:800;
+  margin-bottom:10px;
 }
 
 .list-meta{
@@ -345,39 +378,27 @@ body{
   width:100%;
   height:10px;
   border-radius:999px;
-  overflow:hidden;
   background:#edf2f7;
+  overflow:hidden;
   margin-bottom:18px;
 }
 
 .progress-fill{
   height:100%;
-  background:#2563eb;
+  background:linear-gradient(90deg,#2563eb,#60a5fa);
 }
 
 .list-preview{
   color:#6b7280;
-  line-height:1.6;
-  margin-bottom:22px;
+  line-height:1.7;
+  font-size:14px;
 }
 
-.open-list-btn{
-  width:100%;
-  border:none;
-  background:#2563eb;
-  color:white;
-  padding:16px;
-  border-radius:16px;
-  font-weight:700;
-  cursor:pointer;
-  transition:0.2s;
-}
+/* PAGE */
 
-.open-list-btn:hover{
-  transform:translateY(-2px);
+.hidden{
+  display:none;
 }
-
-/* BACK */
 
 .back-btn{
   border:none;
@@ -389,7 +410,7 @@ body{
   margin-bottom:24px;
 }
 
-/* MODAL */
+/* WORD MODAL */
 
 .modal{
   position:fixed;
@@ -411,7 +432,7 @@ body{
   max-width:760px;
   background:white;
   border-radius:34px;
-  padding:36px;
+  padding:38px;
   max-height:90vh;
   overflow:auto;
   position:relative;
@@ -419,7 +440,7 @@ body{
 
 .close-modal{
   position:absolute;
-  top:20px;
+  top:18px;
   right:24px;
   border:none;
   background:none;
@@ -428,30 +449,28 @@ body{
 }
 
 .modal-word{
-  font-size:62px;
+  font-size:54px;
   font-weight:800;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 
 .modal-type{
   color:#6b7280;
-  font-size:22px;
   margin-bottom:28px;
 }
 
 .modal-definition{
-  font-size:22px;
-  line-height:1.7;
-  margin-bottom:34px;
+  font-size:20px;
+  line-height:1.8;
 }
 
 .modal-section{
-  margin-top:30px;
+  margin-top:34px;
 }
 
 .modal-section h4{
   margin-bottom:14px;
-  font-size:20px;
+  font-size:18px;
 }
 
 .tags{
@@ -461,16 +480,16 @@ body{
 }
 
 .tags span{
+  background:#f4f7fb;
   padding:10px 14px;
   border-radius:999px;
-  background:#f3f5fb;
   font-weight:600;
 }
 
 .examples{
   display:flex;
   flex-direction:column;
-  gap:14px;
+  gap:12px;
 }
 
 .example{
@@ -481,10 +500,10 @@ body{
 }
 
 .mnemonic{
-  background:#eef6ff;
-  padding:22px;
-  border-radius:22px;
-  line-height:1.7;
+  background:#eef4ff;
+  padding:20px;
+  border-radius:20px;
+  line-height:1.8;
 }
 
 /* LIST SELECT MODAL */
@@ -497,6 +516,7 @@ body{
   align-items:center;
   justify-content:center;
   z-index:1200;
+  padding:20px;
 }
 
 .list-modal.active{
@@ -507,7 +527,7 @@ body{
   width:100%;
   max-width:500px;
   background:white;
-  border-radius:32px;
+  border-radius:30px;
   padding:30px;
 }
 
@@ -521,22 +541,22 @@ body{
   display:flex;
   flex-direction:column;
   gap:14px;
-  margin-bottom:26px;
+  margin-bottom:24px;
 }
 
 .checkbox-item{
+  background:#f4f7fb;
+  padding:16px;
+  border-radius:16px;
   display:flex;
   align-items:center;
   gap:12px;
-  background:#f3f5fb;
-  padding:16px;
-  border-radius:16px;
 }
 
 .modal-actions{
   display:flex;
   justify-content:flex-end;
-  gap:14px;
+  gap:12px;
 }
 
 .modal-btn{
@@ -556,9 +576,7 @@ body{
   color:white;
 }
 
-.hidden{
-  display:none;
-}
+/* MOBILE */
 
 @media(max-width:900px){
 
@@ -572,11 +590,19 @@ body{
   }
 
   .hero h1{
-    font-size:40px;
+    font-size:38px;
   }
 
-  .word-title{
-    font-size:40px;
+  .content{
+    padding:22px;
+  }
+
+  .topbar{
+    padding:0 20px;
+  }
+
+  .search{
+    width:180px;
   }
 
 }
@@ -587,35 +613,56 @@ body{
 
 <div class="app">
 
+  <!-- SIDEBAR -->
+
   <aside class="sidebar">
 
-    <div class="logo">Lexify</div>
+    <div class="logo">
+      Lexify
+    </div>
 
     <div class="nav">
-      <button class="active">Vocabulary Library</button>
-      <button>Categories</button>
-      <button>My Lists</button>
-      <button>Review</button>
-      <button>Favorites</button>
-      <button>Progress</button>
-      <button>Settings</button>
+
+      <button class="active">
+        Vocabulary Library
+      </button>
+
+      <button onclick="goHome()">
+        Categories
+      </button>
+
+      <button onclick="goHome()">
+        My Lists
+      </button>
+
+      <button onclick="openFavorites()">
+        Favorites
+      </button>
+
     </div>
 
   </aside>
 
+  <!-- MAIN -->
+
   <main class="main">
+
+    <!-- TOPBAR -->
 
     <div class="topbar">
 
       <input
+        type="text"
         class="search"
         placeholder="Search vocabulary..."
       >
 
       <div class="top-actions">
 
-        <button class="create-btn"
-          onclick="createList()">
+        <button
+          class="create-btn"
+          onclick="createList()"
+        >
           + Create List
         </button>
 
@@ -627,6 +674,8 @@ body{
 
     </div>
 
+    <!-- CONTENT -->
+
     <div class="content">
 
       <!-- HOME -->
@@ -635,11 +684,13 @@ body{
 
         <div class="hero">
 
-          <h1>Vocabulary Library</h1>
+          <h1>
+            Vocabulary Library
+          </h1>
 
           <p>
             Build your TOEFL vocabulary with smart flashcards,
-            custom lists, and review practice.
+            custom lists, and favorites.
           </p>
 
         </div>
@@ -652,13 +703,14 @@ body{
             Categories
           </h2>
 
-          <div class="categories-grid"
+          <div
+            class="categories-grid"
             id="categoriesGrid">
           </div>
 
         </section>
 
-        <!-- FEATURED -->
+        <!-- FEATURED WORDS -->
 
         <section class="section">
 
@@ -666,7 +718,8 @@ body{
             Featured Words
           </h2>
 
-          <div class="words-grid"
+          <div
+            class="words-grid"
             id="featuredWords">
           </div>
 
@@ -680,7 +733,8 @@ body{
             My Lists
           </h2>
 
-          <div class="lists-grid"
+          <div
+            class="lists-grid"
             id="listsGrid">
           </div>
 
@@ -690,19 +744,25 @@ body{
 
       <!-- CATEGORY PAGE -->
 
-      <div id="categoryPage"
+      <div
+        id="categoryPage"
         class="hidden">
 
-        <button class="back-btn"
+        <button
+          class="back-btn"
           onclick="goHome()">
+
           ← Back
+
         </button>
 
-        <h1 class="section-title"
+        <h2
+          class="section-title"
           id="categoryTitle">
-        </h1>
+        </h2>
 
-        <div class="words-grid"
+        <div
+          class="words-grid"
           id="categoryWords">
         </div>
 
@@ -716,25 +776,32 @@ body{
 
 <!-- WORD MODAL -->
 
-<div class="modal"
+<div
+  class="modal"
   id="wordModal">
 
   <div class="modal-card">
 
-    <button class="close-modal"
+    <button
+      class="close-modal"
       onclick="closeModal()">
+
       ×
+
     </button>
 
-    <div class="modal-word"
+    <div
+      class="modal-word"
       id="modalWord">
     </div>
 
-    <div class="modal-type"
+    <div
+      class="modal-type"
       id="modalType">
     </div>
 
-    <div class="modal-definition"
+    <div
+      class="modal-definition"
       id="modalDefinition">
     </div>
 
@@ -742,7 +809,8 @@ body{
 
       <h4>Synonyms</h4>
 
-      <div class="tags"
+      <div
+        class="tags"
         id="modalSynonyms">
       </div>
 
@@ -752,7 +820,8 @@ body{
 
       <h4>Antonyms</h4>
 
-      <div class="tags"
+      <div
+        class="tags"
         id="modalAntonyms">
       </div>
 
@@ -762,7 +831,8 @@ body{
 
       <h4>Examples</h4>
 
-      <div class="examples"
+      <div
+        class="examples"
         id="modalExamples">
       </div>
 
@@ -772,7 +842,8 @@ body{
 
       <h4>Mnemonic</h4>
 
-      <div class="mnemonic"
+      <div
+        class="mnemonic"
         id="modalMnemonic">
       </div>
 
@@ -784,7 +855,8 @@ body{
 
 <!-- LIST MODAL -->
 
-<div class="list-modal"
+<div
+  class="list-modal"
   id="listModal">
 
   <div class="list-modal-card">
@@ -793,20 +865,27 @@ body{
       Add word to lists
     </div>
 
-    <div class="checkbox-group"
+    <div
+      class="checkbox-group"
       id="checkboxGroup">
     </div>
 
     <div class="modal-actions">
 
-      <button class="modal-btn cancel-btn"
+      <button
+        class="modal-btn cancel-btn"
         onclick="closeListModal()">
+
         Cancel
+
       </button>
 
-      <button class="modal-btn save-btn"
+      <button
+        class="modal-btn save-btn"
         onclick="saveWordToLists()">
+
         Add
+
       </button>
 
     </div>
@@ -817,6 +896,8 @@ body{
 
 <script>
 
+/* WORDS */
+
 const words = [
 
 {
@@ -826,10 +907,9 @@ const words = [
   short:"to leave completely",
   definition:"To leave behind permanently or stop supporting something.",
   synonyms:["desert","leave","forsake","quit"],
-  antonyms:["keep","support","continue","stay"],
+  antonyms:["keep","support","continue"],
   examples:[
     "He abandoned the project.",
-    "The crew abandoned the ship.",
     "She never abandoned her dreams."
   ],
   mnemonic:"Imagine abandoning a building forever."
@@ -842,26 +922,25 @@ const words = [
   short:"income earned",
   definition:"Money generated from business operations.",
   synonyms:["income","earnings","profit"],
-  antonyms:["loss","expense","debt"],
+  antonyms:["loss","expense"],
   examples:[
-    "The company increased revenue.",
-    "Advertising creates revenue."
+    "The company increased revenue."
   ],
   mnemonic:"Revenue returns money to business."
 },
 
 {
-  word:"CANVAS",
-  type:"noun",
+  word:"AESTHETIC",
+  type:"adjective",
   category:"Art",
-  short:"surface for painting",
-  definition:"Strong cloth used by artists for painting.",
-  synonyms:["fabric","cloth","surface"],
-  antonyms:["blankness"],
+  short:"related to beauty",
+  definition:"Concerned with beauty or artistic taste.",
+  synonyms:["artistic","beautiful","elegant"],
+  antonyms:["ugly","plain"],
   examples:[
-    "The artist painted on canvas."
+    "The room has a modern aesthetic."
   ],
-  mnemonic:"Canvas carries creative artwork."
+  mnemonic:"Aesthetic = artistic style."
 },
 
 {
@@ -871,7 +950,7 @@ const words = [
   short:"large ruling state",
   definition:"A group of territories ruled by one authority.",
   synonyms:["kingdom","realm","dynasty"],
-  antonyms:["republic","democracy"],
+  antonyms:["republic"],
   examples:[
     "The Roman Empire expanded widely."
   ],
@@ -879,6 +958,8 @@ const words = [
 }
 
 ];
+
+/* CATEGORIES */
 
 const categories = [
 
@@ -904,6 +985,8 @@ const categories = [
 
 ];
 
+/* LISTS */
+
 let lists = [
 
 {
@@ -917,6 +1000,12 @@ let lists = [
 }
 
 ];
+
+/* FAVORITES */
+
+let favorites = [];
+
+/* SELECTED WORD */
 
 let selectedWord = null;
 
@@ -932,10 +1021,14 @@ function renderCategories(){
   categories.forEach(cat=>{
 
     const count =
-      words.filter(w=>w.category===cat.name).length;
+      words.filter(
+        w=>w.category===cat.name
+      ).length;
 
     grid.innerHTML += `
-      <div class="category-card"
+
+      <div
+        class="category-card"
         onclick="openCategory('${cat.name}')">
 
         <div class="category-icon">
@@ -951,19 +1044,25 @@ function renderCategories(){
         </div>
 
       </div>
+
     `;
 
   });
 
 }
 
-/* WORD CARD */
+/* CREATE WORD CARD */
 
 function createWordCard(word){
 
+  const isFavorite =
+    favorites.includes(word.word);
+
   return `
-    <div class="word-card"
-      onclick="openWord(event,'${word.word}')">
+
+    <div
+      class="word-card"
+      onclick="openWord('${word.word}')">
 
       <div class="word-top">
 
@@ -971,18 +1070,8 @@ function createWordCard(word){
           ${word.category}
         </div>
 
-        <div class="word-actions">
-
-          <button class="icon-btn favorite-btn"
-            onclick="event.stopPropagation()">
-            ★
-          </button>
-
-          <button class="icon-btn list-btn"
-            onclick="openListSelector(event,'${word.word}')">
-            +
-          </button>
-
+        <div class="favorite-icon">
+          ✦
         </div>
 
       </div>
@@ -999,7 +1088,28 @@ function createWordCard(word){
         ${word.short}
       </div>
 
+      <div class="word-actions">
+
+        <button
+          class="action-btn favorite-btn ${isFavorite ? 'active' : ''}"
+          onclick="toggleFavorite(event,'${word.word}')">
+
+          ★ Favorite
+
+        </button>
+
+        <button
+          class="action-btn list-btn"
+          onclick="openListSelector(event,'${word.word}')">
+
+          + Add to List
+
+        </button>
+
+      </div>
+
     </div>
+
   `;
 
 }
@@ -1008,20 +1118,21 @@ function createWordCard(word){
 
 function renderFeaturedWords(){
 
-  const featured =
+  const container =
     document.getElementById("featuredWords");
 
-  featured.innerHTML = "";
+  container.innerHTML = "";
 
   words.forEach(word=>{
 
-    featured.innerHTML += createWordCard(word);
+    container.innerHTML +=
+      createWordCard(word);
 
   });
 
 }
 
-/* LISTS */
+/* RENDER LISTS */
 
 function renderLists(){
 
@@ -1033,7 +1144,10 @@ function renderLists(){
   lists.forEach((list,index)=>{
 
     grid.innerHTML += `
-      <div class="list-card">
+
+      <div
+        class="list-card"
+        onclick="openList(${index})">
 
         <div class="list-title">
           ${list.name}
@@ -1044,32 +1158,35 @@ function renderLists(){
         </div>
 
         <div class="progress">
-          <div class="progress-fill"
-            style="width:${Math.min(list.words.length*20,100)}%">
+
+          <div
+            class="progress-fill"
+            style="
+              width:${Math.min(list.words.length*20,100)}%
+            ">
           </div>
+
         </div>
 
         <div class="list-preview">
+
           ${
             list.words.length
             ? list.words.join(", ")
             : "No words yet"
           }
+
         </div>
 
-        <button class="open-list-btn"
-          onclick="openList(${index})">
-          Open List
-        </button>
-
       </div>
+
     `;
 
   });
 
 }
 
-/* CATEGORY */
+/* OPEN CATEGORY */
 
 function openCategory(name){
 
@@ -1091,11 +1208,57 @@ function openCategory(name){
     .filter(w=>w.category===name)
     .forEach(word=>{
 
-      container.innerHTML += createWordCard(word);
+      container.innerHTML +=
+        createWordCard(word);
 
     });
 
 }
+
+/* OPEN FAVORITES */
+
+function openFavorites(){
+
+  document.getElementById("homePage")
+    .classList.add("hidden");
+
+  document.getElementById("categoryPage")
+    .classList.remove("hidden");
+
+  document.getElementById("categoryTitle")
+    .innerText = "Favorites";
+
+  const container =
+    document.getElementById("categoryWords");
+
+  container.innerHTML = "";
+
+  const favoriteWords =
+    words.filter(
+      w=>favorites.includes(w.word)
+    );
+
+  if(favoriteWords.length===0){
+
+    container.innerHTML = `
+      <div class="list-card">
+        No favorite words yet.
+      </div>
+    `;
+
+    return;
+  }
+
+  favoriteWords.forEach(word=>{
+
+    container.innerHTML +=
+      createWordCard(word);
+
+  });
+
+}
+
+/* GO HOME */
 
 function goHome(){
 
@@ -1127,16 +1290,10 @@ function openList(index){
 
   container.innerHTML = "";
 
-  if(list.words.length === 0){
+  if(list.words.length===0){
 
     container.innerHTML = `
-      <div style="
-        background:white;
-        padding:40px;
-        border-radius:30px;
-        font-size:20px;
-        color:#6b7280;
-      ">
+      <div class="list-card">
         This list is empty.
       </div>
     `;
@@ -1147,11 +1304,16 @@ function openList(index){
   list.words.forEach(wordName=>{
 
     const word =
-      words.find(w=>w.word===wordName);
+      words.find(
+        w=>w.word===wordName
+      );
 
-    if(!word) return;
+    if(word){
 
-    container.innerHTML += createWordCard(word);
+      container.innerHTML +=
+        createWordCard(word);
+
+    }
 
   });
 
@@ -1159,9 +1321,7 @@ function openList(index){
 
 /* WORD MODAL */
 
-function openWord(event,name){
-
-  event.stopPropagation();
+function openWord(name){
 
   const word =
     words.find(w=>w.word===name);
@@ -1201,9 +1361,12 @@ function openWord(event,name){
         .join("");
 
   document.getElementById("modalMnemonic")
-    .innerText = word.mnemonic;
+    .innerText =
+      word.mnemonic;
 
 }
+
+/* CLOSE MODAL */
 
 function closeModal(){
 
@@ -1222,8 +1385,10 @@ function createList(){
   if(!name) return;
 
   lists.push({
+
     name:name,
     words:[]
+
   });
 
   renderLists();
@@ -1246,14 +1411,19 @@ function openListSelector(event,wordName){
   lists.forEach((list,index)=>{
 
     group.innerHTML += `
+
       <label class="checkbox-item">
 
-        <input type="checkbox"
+        <input
+          type="checkbox"
           value="${index}">
 
-        <span>${list.name}</span>
+        <span>
+          ${list.name}
+        </span>
 
       </label>
+
     `;
 
   });
@@ -1262,6 +1432,8 @@ function openListSelector(event,wordName){
     .classList.add("active");
 
 }
+
+/* CLOSE LIST MODAL */
 
 function closeListModal(){
 
@@ -1281,9 +1453,12 @@ function saveWordToLists(){
 
   checked.forEach(box=>{
 
-    const list = lists[box.value];
+    const list =
+      lists[box.value];
 
-    if(!list.words.includes(selectedWord)){
+    if(
+      !list.words.includes(selectedWord)
+    ){
 
       list.words.push(selectedWord);
 
@@ -1294,6 +1469,29 @@ function saveWordToLists(){
   renderLists();
 
   closeListModal();
+
+}
+
+/* FAVORITES */
+
+function toggleFavorite(event,wordName){
+
+  event.stopPropagation();
+
+  if(favorites.includes(wordName)){
+
+    favorites =
+      favorites.filter(
+        word=>word!==wordName
+      );
+
+  }else{
+
+    favorites.push(wordName);
+
+  }
+
+  renderFeaturedWords();
 
 }
 
