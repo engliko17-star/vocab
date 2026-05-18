@@ -262,7 +262,7 @@ body{
 
 .word-top{
   display:flex;
-  justify-content:space-between;
+  justify-content:flex-start;
   align-items:center;
   margin-bottom:18px;
 }
@@ -274,18 +274,6 @@ body{
   border-radius:999px;
   font-size:12px;
   font-weight:700;
-}
-
-.favorite-icon{
-  width:38px;
-  height:38px;
-  border-radius:12px;
-  background:#fff7ed;
-  color:#f59e0b;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:18px;
 }
 
 .word-title{
@@ -613,8 +601,6 @@ body{
 
 <div class="app">
 
-  <!-- SIDEBAR -->
-
   <aside class="sidebar">
 
     <div class="logo">
@@ -643,11 +629,7 @@ body{
 
   </aside>
 
-  <!-- MAIN -->
-
   <main class="main">
-
-    <!-- TOPBAR -->
 
     <div class="topbar">
 
@@ -674,11 +656,7 @@ body{
 
     </div>
 
-    <!-- CONTENT -->
-
     <div class="content">
-
-      <!-- HOME -->
 
       <div id="homePage">
 
@@ -695,8 +673,6 @@ body{
 
         </div>
 
-        <!-- CATEGORIES -->
-
         <section class="section">
 
           <h2 class="section-title">
@@ -710,8 +686,6 @@ body{
 
         </section>
 
-        <!-- FEATURED WORDS -->
-
         <section class="section">
 
           <h2 class="section-title">
@@ -724,8 +698,6 @@ body{
           </div>
 
         </section>
-
-        <!-- LISTS -->
 
         <section class="section">
 
@@ -741,8 +713,6 @@ body{
         </section>
 
       </div>
-
-      <!-- CATEGORY PAGE -->
 
       <div
         id="categoryPage"
@@ -773,8 +743,6 @@ body{
   </main>
 
 </div>
-
-<!-- WORD MODAL -->
 
 <div
   class="modal"
@@ -853,8 +821,6 @@ body{
 
 </div>
 
-<!-- LIST MODAL -->
-
 <div
   class="list-modal"
   id="listModal">
@@ -895,8 +861,6 @@ body{
 </div>
 
 <script>
-
-/* WORDS */
 
 const words = [
 
@@ -959,8 +923,6 @@ const words = [
 
 ];
 
-/* CATEGORIES */
-
 const categories = [
 
 {
@@ -985,8 +947,6 @@ const categories = [
 
 ];
 
-/* LISTS */
-
 let lists = [
 
 {
@@ -1001,15 +961,8 @@ let lists = [
 
 ];
 
-/* FAVORITES */
-
 let favorites = [];
-
-/* SELECTED WORD */
-
 let selectedWord = null;
-
-/* RENDER CATEGORIES */
 
 function renderCategories(){
 
@@ -1051,8 +1004,6 @@ function renderCategories(){
 
 }
 
-/* CREATE WORD CARD */
-
 function createWordCard(word){
 
   const isFavorite =
@@ -1068,10 +1019,6 @@ function createWordCard(word){
 
         <div class="word-tag">
           ${word.category}
-        </div>
-
-        <div class="favorite-icon">
-          ✦
         </div>
 
       </div>
@@ -1114,8 +1061,6 @@ function createWordCard(word){
 
 }
 
-/* FEATURED WORDS */
-
 function renderFeaturedWords(){
 
   const container =
@@ -1131,8 +1076,6 @@ function renderFeaturedWords(){
   });
 
 }
-
-/* RENDER LISTS */
 
 function renderLists(){
 
@@ -1186,8 +1129,6 @@ function renderLists(){
 
 }
 
-/* OPEN CATEGORY */
-
 function openCategory(name){
 
   document.getElementById("homePage")
@@ -1214,8 +1155,6 @@ function openCategory(name){
     });
 
 }
-
-/* OPEN FAVORITES */
 
 function openFavorites(){
 
@@ -1258,8 +1197,6 @@ function openFavorites(){
 
 }
 
-/* GO HOME */
-
 function goHome(){
 
   document.getElementById("homePage")
@@ -1269,8 +1206,6 @@ function goHome(){
     .classList.add("hidden");
 
 }
-
-/* OPEN LIST */
 
 function openList(index){
 
@@ -1319,8 +1254,6 @@ function openList(index){
 
 }
 
-/* WORD MODAL */
-
 function openWord(name){
 
   const word =
@@ -1366,16 +1299,12 @@ function openWord(name){
 
 }
 
-/* CLOSE MODAL */
-
 function closeModal(){
 
   document.getElementById("wordModal")
     .classList.remove("active");
 
 }
-
-/* CREATE LIST */
 
 function createList(){
 
@@ -1394,8 +1323,6 @@ function createList(){
   renderLists();
 
 }
-
-/* OPEN LIST SELECTOR */
 
 function openListSelector(event,wordName){
 
@@ -1433,16 +1360,12 @@ function openListSelector(event,wordName){
 
 }
 
-/* CLOSE LIST MODAL */
-
 function closeListModal(){
 
   document.getElementById("listModal")
     .classList.remove("active");
 
 }
-
-/* SAVE WORD TO LISTS */
 
 function saveWordToLists(){
 
@@ -1472,8 +1395,6 @@ function saveWordToLists(){
 
 }
 
-/* FAVORITES */
-
 function toggleFavorite(event,wordName){
 
   event.stopPropagation();
@@ -1494,8 +1415,6 @@ function toggleFavorite(event,wordName){
   renderFeaturedWords();
 
 }
-
-/* INIT */
 
 renderCategories();
 renderFeaturedWords();
