@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Lexify Vocabulary Library</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#f3f5fb;
+  color:#111827;
+}
+
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:250px;
+  background:white;
+  border-right:1px solid #e5e7eb;
+  padding:30px 20px;
+  position:fixed;
+  top:0;
+  left:0;
+  height:100vh;
+}
+
+.logo{
+  font-size:42px;
+  font-weight:800;
+  color:#2563eb;
+  margin-bottom:40px;
+}
+
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.nav button{
+  border:none;
+  background:none;
+  padding:14px 18px;
+  border-radius:16px;
+  text-align:left;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.2s;
+  color:#6b7280;
+}
+
+.nav button:hover{
+  background:#eef4ff;
+  color:#2563eb;
+}
+
+.nav button.active{
+  background:#2563eb;
+  color:white;
+}
+
+/* MAIN */
+
+.main{
+  margin-left:250px;
+  width:calc(100% - 250px);
+}
+
+.topbar{
+  height:90px;
+  background:white;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 32px;
+}
+
+.search{
+  width:360px;
+  border:none;
+  background:#f3f5fb;
+  border-radius:16px;
+  height:48px;
+  padding:0 18px;
+  font-size:15px;
+  outline:none;
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.create-btn{
+  border:none;
+  background:#2563eb;
+  color:white;
+  padding:14px 22px;
+  border-radius:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.avatar{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:#dbeafe;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#2563eb;
+  font-weight:700;
+}
+
+.content{
+  padding:36px;
+}
+
+/* HERO */
+
+.hero{
+  background:linear-gradient(135deg,#2563eb,#60a5fa);
+  border-radius:36px;
+  padding:46px;
+  color:white;
+  margin-bottom:40px;
+}
+
+.hero h1{
+  font-size:58px;
+  margin-bottom:12px;
+}
+
+.hero p{
+  font-size:18px;
+  opacity:0.95;
+}
+
+/* SECTION */
+
+.section{
+  margin-top:44px;
+}
+
+.section-title{
+  font-size:42px;
+  font-weight:800;
+  margin-bottom:24px;
+}
+
+/* CATEGORIES */
+
+.categories-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:24px;
+}
+
+.category-card{
+  background:white;
+  border-radius:28px;
+  padding:28px;
+  cursor:pointer;
+  transition:0.25s;
+}
+
+.category-card:hover{
+  transform:translateY(-5px);
+}
+
+.category-icon{
+  font-size:42px;
+  margin-bottom:18px;
+}
+
+.category-title{
+  font-size:28px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.category-count{
+  color:#6b7280;
+}
+
+/* WORDS */
+
+.words-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+  gap:26px;
+}
+
+.word-card{
+  background:white;
+  border-radius:32px;
+  padding:28px;
+  transition:0.25s;
+}
+
+.word-card:hover{
+  transform:translateY(-4px);
+}
+
+.word-tag{
+  display:inline-flex;
+  padding:8px 14px;
+  border-radius:999px;
+  background:#eef4ff;
+  color:#2563eb;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:24px;
+}
+
+.word-title{
+  font-size:52px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.word-type{
+  color:#6b7280;
+  font-size:20px;
+  margin-bottom:20px;
+}
+
+.word-short{
+  font-size:20px;
+  line-height:1.6;
+  color:#4b5563;
+  margin-bottom:28px;
+}
+
+.word-actions{
+  display:flex;
+  gap:14px;
+}
+
+.action-btn{
+  flex:1;
+  border:none;
+  border-radius:16px;
+  padding:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.favorite-btn{
+  background:#fff7ed;
+  color:#ea580c;
+}
+
+.list-btn{
+  background:#eef4ff;
+  color:#2563eb;
+}
+
+.open-btn{
+  background:#ecfdf5;
+  color:#059669;
+}
+
+/* LISTS */
+
+.lists-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+  gap:24px;
+}
+
+.list-card{
+  background:white;
+  border-radius:30px;
+  padding:28px;
+}
+
+.list-title{
+  font-size:30px;
+  font-weight:700;
+  margin-bottom:12px;
+}
+
+.list-meta{
+  color:#6b7280;
+  margin-bottom:18px;
+}
+
+.progress{
+  width:100%;
+  height:10px;
+  border-radius:999px;
+  overflow:hidden;
+  background:#edf2f7;
+  margin-bottom:18px;
+}
+
+.progress-fill{
+  height:100%;
+  background:#2563eb;
+}
+
+.list-preview{
+  color:#6b7280;
+  line-height:1.6;
+  margin-bottom:22px;
+}
+
+.open-list-btn{
+  width:100%;
+  border:none;
+  background:#2563eb;
+  color:white;
+  padding:16px;
+  border-radius:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* BACK */
+
+.back-btn{
+  border:none;
+  background:white;
+  padding:14px 18px;
+  border-radius:16px;
+  font-weight:700;
+  cursor:pointer;
+  margin-bottom:24px;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:999;
+}
+
+.modal.active{
+  display:flex;
+}
+
+.modal-card{
+  width:100%;
+  max-width:760px;
+  background:white;
+  border-radius:34px;
+  padding:36px;
+  max-height:90vh;
+  overflow:auto;
+  position:relative;
+}
+
+.close-modal{
+  position:absolute;
+  top:20px;
+  right:24px;
+  border:none;
+  background:none;
+  font-size:34px;
+  cursor:pointer;
+}
+
+.modal-word{
+  font-size:62px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+.modal-type{
+  color:#6b7280;
+  font-size:22px;
+  margin-bottom:28px;
+}
+
+.modal-definition{
+  font-size:22px;
+  line-height:1.7;
+  margin-bottom:34px;
+}
+
+.modal-section{
+  margin-top:30px;
+}
+
+.modal-section h4{
+  margin-bottom:14px;
+  font-size:20px;
+}
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.tags span{
+  padding:10px 14px;
+  border-radius:999px;
+  background:#f3f5fb;
+  font-weight:600;
+}
+
+.examples{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.example{
+  background:#f8fafc;
+  padding:18px;
+  border-radius:18px;
+  line-height:1.7;
+}
+
+.mnemonic{
+  background:#eef6ff;
+  padding:22px;
+  border-radius:22px;
+  line-height:1.7;
+}
+
+/* LIST SELECT MODAL */
+
+.list-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1200;
+}
+
+.list-modal.active{
+  display:flex;
+}
+
+.list-modal-card{
+  width:100%;
+  max-width:500px;
+  background:white;
+  border-radius:32px;
+  padding:30px;
+}
+
+.list-modal-title{
+  font-size:28px;
+  font-weight:800;
+  margin-bottom:24px;
+}
+
+.checkbox-group{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-bottom:26px;
+}
+
+.checkbox-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:#f3f5fb;
+  padding:16px;
+  border-radius:16px;
+}
+
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:14px;
+}
+
+.modal-btn{
+  border:none;
+  padding:14px 18px;
+  border-radius:14px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.cancel-btn{
+  background:#eef2f7;
+}
+
+.save-btn{
+  background:#2563eb;
+  color:white;
+}
+
+.hidden{
+  display:none;
+}
+
+@media(max-width:900px){
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+
+    <div class="logo">Lexify</div>
+
+    <div class="nav">
+      <button class="active">Vocabulary Library</button>
+      <button>Categories</button>
+      <button>My Lists</button>
+      <button>Review</button>
+      <button>Favorites</button>
+      <button>Progress</button>
+      <button>Settings</button>
+    </div>
+
+  </aside>
+
+  <main class="main">
+
+    <div class="topbar">
+
+      <input
+        class="search"
+        placeholder="Search vocabulary..."
+      >
+
+      <div class="top-actions">
+
+        <button class="create-btn"
+          onclick="createList()">
+          + Create List
+        </button>
+
+        <div class="avatar">
+          A
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="content">
+
+      <div id="homePage">
+
+        <div class="hero">
+
+          <h1>Vocabulary Library</h1>
+
+          <p>
+            Build your TOEFL vocabulary with smart flashcards,
+            custom lists, and review practice.
+          </p>
+
+        </div>
+
+        <section class="section">
+
+          <h2 class="section-title">
+            Categories
+          </h2>
+
+          <div class="categories-grid"
+            id="categoriesGrid">
+          </div>
+
+        </section>
+
+        <section class="section">
+
+          <h2 class="section-title">
+            Featured Words
+          </h2>
+
+          <div class="words-grid"
+            id="featuredWords">
+          </div>
+
+        </section>
+
+        <section class="section">
+
+          <h2 class="section-title">
+            My Lists
+          </h2>
+
+          <div class="lists-grid"
+            id="listsGrid">
+          </div>
+
+        </section>
+
+      </div>
+
+      <div id="categoryPage"
+        class="hidden">
+
+        <button class="back-btn"
+          onclick="goHome()">
+          ← Back
+        </button>
+
+        <h1 class="section-title"
+          id="categoryTitle">
+        </h1>
+
+        <div class="words-grid"
+          id="categoryWords">
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+<!-- WORD MODAL -->
+
+<div class="modal"
+  id="wordModal">
+
+  <div class="modal-card">
+
+    <button class="close-modal"
+      onclick="closeModal()">
+      ×
+    </button>
+
+    <div class="modal-word"
+      id="modalWord">
+    </div>
+
+    <div class="modal-type"
+      id="modalType">
+    </div>
+
+    <div class="modal-definition"
+      id="modalDefinition">
+    </div>
+
+    <div class="modal-section">
+
+      <h4>Synonyms</h4>
+
+      <div class="tags"
+        id="modalSynonyms">
+      </div>
+
+    </div>
+
+    <div class="modal-section">
+
+      <h4>Antonyms</h4>
+
+      <div class="tags"
+        id="modalAntonyms">
+      </div>
+
+    </div>
+
+    <div class="modal-section">
+
+      <h4>Examples</h4>
+
+      <div class="examples"
+        id="modalExamples">
+      </div>
+
+    </div>
+
+    <div class="modal-section">
+
+      <h4>Mnemonic</h4>
+
+      <div class="mnemonic"
+        id="modalMnemonic">
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- LIST MODAL -->
+
+<div class="list-modal"
+  id="listModal">
+
+  <div class="list-modal-card">
+
+    <div class="list-modal-title">
+      Add word to lists
+    </div>
+
+    <div class="checkbox-group"
+      id="checkboxGroup">
+    </div>
+
+    <div class="modal-actions">
+
+      <button class="modal-btn cancel-btn"
+        onclick="closeListModal()">
+        Cancel
+      </button>
+
+      <button class="modal-btn save-btn"
+        onclick="saveWordToLists()">
+        Add
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* SUPABASE */
+
+const SUPABASE_URL =
+"https://esnlflhatbpnmpkfhvsi.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_PiFBJlSGbn2MlyJeYVX1TA_qCIfBC8u";
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+/* WORDS */
+
+const words = [
+
+{
+  word:"ABANDON",
+  type:"verb",
+  category:"Psychology",
+  short:"to leave completely",
+  definition:"To leave behind permanently or stop supporting something.",
+  synonyms:["desert","leave","forsake","quit"],
+  antonyms:["keep","support","continue","stay"],
+  examples:[
+    "He abandoned the project.",
+    "The crew abandoned the ship.",
+    "She never abandoned her dreams."
+  ],
+  mnemonic:"Imagine abandoning a building forever."
+},
+
+{
+  word:"REVENUE",
+  type:"noun",
+  category:"Business",
+  short:"income earned",
+  definition:"Money generated from business operations.",
+  synonyms:["income","earnings","profit"],
+  antonyms:["loss","expense","debt"],
+  examples:[
+    "The company increased revenue."
+  ],
+  mnemonic:"Revenue returns money to business."
+},
+
+{
+  word:"CANVAS",
+  type:"noun",
+  category:"Art",
+  short:"surface for painting",
+  definition:"Strong cloth used by artists for painting.",
+  synonyms:["fabric","cloth","surface"],
+  antonyms:["blankness"],
+  examples:[
+    "The artist painted on canvas."
+  ],
+  mnemonic:"Canvas carries creative artwork."
+},
+
+{
+  word:"EMPIRE",
+  type:"noun",
+  category:"History",
+  short:"large ruling state",
+  definition:"A group of territories ruled by one authority.",
+  synonyms:["kingdom","realm","dynasty"],
+  antonyms:["republic","democracy"],
+  examples:[
+    "The Roman Empire expanded widely."
+  ],
+  mnemonic:"Empire = emperor ruling lands."
+}
+
+];
+
+/* CATEGORIES */
+
+const categories = [
+
+{
+  name:"Psychology",
+  icon:"🧠"
+},
+
+{
+  name:"Business",
+  icon:"💼"
+},
+
+{
+  name:"Art",
+  icon:"🎨"
+},
+
+{
+  name:"History",
+  icon:"🏛️"
+}
+
+];
+
+/* LISTS */
+
+let lists = [];
+
+let selectedWord = null;
+
+/* RENDER CATEGORIES */
+
+function renderCategories(){
+
+  const grid =
+    document.getElementById("categoriesGrid");
+
+  grid.innerHTML = "";
+
+  categories.forEach(cat=>{
+
+    const count =
+      words.filter(
+        w=>w.category===cat.name
+      ).length;
+
+    grid.innerHTML += `
+      <div class="category-card"
+        onclick="openCategory('${cat.name}')">
+
+        <div class="category-icon">
+          ${cat.icon}
+        </div>
+
+        <div class="category-title">
+          ${cat.name}
+        </div>
+
+        <div class="category-count">
+          ${count} words
+        </div>
+
+      </div>
+    `;
+
+  });
+
+}
+
+/* WORD CARD */
+
+function createWordCard(word){
+
+  return `
+    <div class="word-card">
+
+      <div class="word-tag">
+        ${word.category}
+      </div>
+
+      <div class="word-title">
+        ${word.word}
+      </div>
+
+      <div class="word-type">
+        ${word.type}
+      </div>
+
+      <div class="word-short">
+        ${word.short}
+      </div>
+
+      <div class="word-actions">
+
+        <button class="action-btn favorite-btn">
+          ★
+        </button>
+
+        <button class="action-btn list-btn"
+          onclick="openListSelector(event,'${word.word}')">
+          + List
+        </button>
+
+        <button class="action-btn open-btn"
+          onclick="openWord(event,'${word.word}')">
+          Open
+        </button>
+
+      </div>
+
+    </div>
+  `;
+
+}
+
+/* FEATURED WORDS */
+
+function renderFeaturedWords(){
+
+  const featured =
+    document.getElementById("featuredWords");
+
+  featured.innerHTML = "";
+
+  words.forEach(word=>{
+
+    featured.innerHTML +=
+      createWordCard(word);
+
+  });
+
+}
+
+/* RENDER LISTS */
+
+function renderLists(){
+
+  const grid =
+    document.getElementById("listsGrid");
+
+  grid.innerHTML = "";
+
+  if(lists.length === 0){
+
+    grid.innerHTML = `
+      <div class="list-card">
+
+        <div class="list-title">
+          No lists yet
+        </div>
+
+        <div class="list-preview">
+          Create your first vocabulary list.
+        </div>
+
+      </div>
+    `;
+
+    return;
+
+  }
+
+  lists.forEach((list,index)=>{
+
+    grid.innerHTML += `
+      <div class="list-card">
+
+        <div class="list-title">
+          ${list.list_title}
+        </div>
+
+        <div class="list-meta">
+          ${(list.words || []).length} words
+        </div>
+
+        <div class="progress">
+          <div class="progress-fill"
+            style="
+              width:${Math.min(((list.words || []).length * 20),100)}%;
+            ">
+          </div>
+        </div>
+
+        <div class="list-preview">
+          ${
+            (list.words || []).length
+            ? list.words.join(", ")
+            : "No words yet"
+          }
+        </div>
+
+        <button class="open-list-btn"
+          onclick="openList(${index})">
+          Open List
+        </button>
+
+      </div>
+    `;
+
+  });
+
+}
+
+/* OPEN CATEGORY */
+
+function openCategory(name){
+
+  document.getElementById("homePage")
+    .classList.add("hidden");
+
+  document.getElementById("categoryPage")
+    .classList.remove("hidden");
+
+  document.getElementById("categoryTitle")
+    .innerText = name;
+
+  const container =
+    document.getElementById("categoryWords");
+
+  container.innerHTML = "";
+
+  words
+    .filter(w=>w.category===name)
+    .forEach(word=>{
+
+      container.innerHTML +=
+        createWordCard(word);
+
+    });
+
+}
+
+/* GO HOME */
+
+function goHome(){
+
+  document.getElementById("homePage")
+    .classList.remove("hidden");
+
+  document.getElementById("categoryPage")
+    .classList.add("hidden");
+
+}
+
+/* OPEN LIST */
+
+function openList(index){
+
+  const list = lists[index];
+
+  document.getElementById("homePage")
+    .classList.add("hidden");
+
+  document.getElementById("categoryPage")
+    .classList.remove("hidden");
+
+  document.getElementById("categoryTitle")
+    .innerText = list.list_title;
+
+  const container =
+    document.getElementById("categoryWords");
+
+  container.innerHTML = "";
+
+  if(!list.words || list.words.length === 0){
+
+    container.innerHTML = `
+      <div class="list-card">
+        This list is empty.
+      </div>
+    `;
+
+    return;
+
+  }
+
+  list.words.forEach(wordName=>{
+
+    const word =
+      words.find(w=>w.word===wordName);
+
+    if(!word) return;
+
+    container.innerHTML +=
+      createWordCard(word);
+
+  });
+
+}
+
+/* WORD MODAL */
+
+function openWord(event,name){
+
+  event.stopPropagation();
+
+  const word =
+    words.find(w=>w.word===name);
+
+  document.getElementById("wordModal")
+    .classList.add("active");
+
+  document.getElementById("modalWord")
+    .innerText = word.word;
+
+  document.getElementById("modalType")
+    .innerText = word.type;
+
+  document.getElementById("modalDefinition")
+    .innerText = word.definition;
+
+  document.getElementById("modalSynonyms")
+    .innerHTML =
+      word.synonyms
+        .map(s=>`<span>${s}</span>`)
+        .join("");
+
+  document.getElementById("modalAntonyms")
+    .innerHTML =
+      word.antonyms
+        .map(a=>`<span>${a}</span>`)
+        .join("");
+
+  document.getElementById("modalExamples")
+    .innerHTML =
+      word.examples
+        .map(e=>`
+          <div class="example">
+            ${e}
+          </div>
+        `)
+        .join("");
+
+  document.getElementById("modalMnemonic")
+    .innerText =
+      word.mnemonic;
+
+}
+
+function closeModal(){
+
+  document.getElementById("wordModal")
+    .classList.remove("active");
+
+}
+
+/* CREATE LIST */
+
+async function createList(){
+
+  const name =
+    prompt("Enter list name");
+
+  if(!name) return;
+
+  const { error } =
+    await supabaseClient
+      .from("list_words")
+      .insert([
+        {
+          list_title:name,
+          words:[]
+        }
+      ]);
+
+  if(error){
+
+    alert(error.message);
+    return;
+
+  }
+
+  await loadLists();
+
+}
+
+/* LOAD LISTS */
+
+async function loadLists(){
+
+  const { data,error } =
+    await supabaseClient
+      .from("list_words")
+      .select("*")
+      .order("created_at",{
+        ascending:false
+      });
+
+  if(error){
+
+    console.log(error);
+    return;
+
+  }
+
+  lists = data || [];
+
+  renderLists();
+
+}
+
+/* LIST SELECTOR */
+
+function openListSelector(event,wordName){
+
+  event.stopPropagation();
+
+  selectedWord = wordName;
+
+  const group =
+    document.getElementById("checkboxGroup");
+
+  group.innerHTML = "";
+
+  lists.forEach((list,index)=>{
+
+    group.innerHTML += `
+      <label class="checkbox-item">
+
+        <input
+          type="checkbox"
+          value="${index}"
+        >
+
+        <span>
+          ${list.list_title}
+        </span>
+
+      </label>
+    `;
+
+  });
+
+  document.getElementById("listModal")
+    .classList.add("active");
+
+}
+
+function closeListModal(){
+
+  document.getElementById("listModal")
+    .classList.remove("active");
+
+}
+
+/* SAVE WORD */
+
+async function saveWordToLists(){
+
+  const checked =
+    document.querySelectorAll(
+      "#checkboxGroup input:checked"
+    );
+
+  for(const box of checked){
+
+    const list =
+      lists[box.value];
+
+    const currentWords =
+      list.words || [];
+
+    if(!currentWords.includes(selectedWord)){
+
+      currentWords.push(selectedWord);
+
+      await supabaseClient
+        .from("list_words")
+        .update({
+          words:currentWords
+        })
+        .eq("id",list.id);
+
+    }
+
+  }
+
+  closeListModal();
+
+  await loadLists();
+
+}
+
+/* INIT */
+
+async function init(){
+
+  renderCategories();
+
+  renderFeaturedWords();
+
+  await loadLists();
+
+}
+
+init();
+
+</script>
+
+</body>
+</html>
