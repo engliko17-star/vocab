@@ -9,6 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 
 *{
@@ -27,8 +30,6 @@ body{
   display:flex;
   min-height:100vh;
 }
-
-/* SIDEBAR */
 
 .sidebar{
   width:250px;
@@ -76,14 +77,10 @@ body{
   color:white;
 }
 
-/* MAIN */
-
 .main{
   margin-left:250px;
   width:calc(100% - 250px);
 }
-
-/* TOPBAR */
 
 .topbar{
   height:90px;
@@ -139,13 +136,9 @@ body{
   font-weight:800;
 }
 
-/* CONTENT */
-
 .content{
   padding:36px;
 }
-
-/* HERO */
 
 .hero{
   background:linear-gradient(135deg,#2563eb,#60a5fa);
@@ -166,8 +159,6 @@ body{
   line-height:1.7;
 }
 
-/* SECTION */
-
 .section{
   margin-top:46px;
 }
@@ -177,8 +168,6 @@ body{
   font-weight:800;
   margin-bottom:24px;
 }
-
-/* CATEGORY GRID */
 
 .categories-grid{
   display:grid;
@@ -211,22 +200,17 @@ body{
 .category-icon{
   font-size:38px;
   margin-bottom:18px;
-  position:relative;
 }
 
 .category-title{
   font-size:24px;
   font-weight:800;
   margin-bottom:8px;
-  position:relative;
 }
 
 .category-count{
   color:#6b7280;
-  position:relative;
 }
-
-/* WORDS */
 
 .words-grid{
   display:grid;
@@ -330,8 +314,6 @@ body{
   color:#2563eb;
 }
 
-/* LISTS */
-
 .lists-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
@@ -382,8 +364,6 @@ body{
   font-size:14px;
 }
 
-/* PAGE */
-
 .hidden{
   display:none;
 }
@@ -397,8 +377,6 @@ body{
   cursor:pointer;
   margin-bottom:24px;
 }
-
-/* WORD MODAL */
 
 .modal{
   position:fixed;
@@ -494,8 +472,6 @@ body{
   line-height:1.8;
 }
 
-/* LIST SELECT MODAL */
-
 .list-modal{
   position:fixed;
   inset:0;
@@ -563,8 +539,6 @@ body{
   background:#2563eb;
   color:white;
 }
-
-/* MOBILE */
 
 @media(max-width:900px){
 
@@ -744,6 +718,8 @@ body{
 
 </div>
 
+<!-- WORD MODAL -->
+
 <div
   class="modal"
   id="wordModal">
@@ -821,6 +797,8 @@ body{
 
 </div>
 
+<!-- LIST MODAL -->
+
 <div
   class="list-modal"
   id="listModal">
@@ -862,66 +840,25 @@ body{
 
 <script>
 
-const words = [
+/* SUPABASE */
 
-{
-  word:"ABANDON",
-  type:"verb",
-  category:"Psychology",
-  short:"to leave completely",
-  definition:"To leave behind permanently or stop supporting something.",
-  synonyms:["desert","leave","forsake","quit"],
-  antonyms:["keep","support","continue"],
-  examples:[
-    "He abandoned the project.",
-    "She never abandoned her dreams."
-  ],
-  mnemonic:"Imagine abandoning a building forever."
-},
+const SUPABASE_URL =
+'https://esnlflhatbpnmpkfhvsi.supabase.co';
 
-{
-  word:"REVENUE",
-  type:"noun",
-  category:"Business",
-  short:"income earned",
-  definition:"Money generated from business operations.",
-  synonyms:["income","earnings","profit"],
-  antonyms:["loss","expense"],
-  examples:[
-    "The company increased revenue."
-  ],
-  mnemonic:"Revenue returns money to business."
-},
+const SUPABASE_KEY =
+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzbmxmbGhhdGJwbm1wa2ZodnNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMDMzMjYsImV4cCI6MjA5NDU3OTMyNn0.EBlGCLw4vk52FYCh-RZdwbXTV_IoipxmQG3x3BkW5Tg';
 
-{
-  word:"AESTHETIC",
-  type:"adjective",
-  category:"Art",
-  short:"related to beauty",
-  definition:"Concerned with beauty or artistic taste.",
-  synonyms:["artistic","beautiful","elegant"],
-  antonyms:["ugly","plain"],
-  examples:[
-    "The room has a modern aesthetic."
-  ],
-  mnemonic:"Aesthetic = artistic style."
-},
+const supabase =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
-{
-  word:"EMPIRE",
-  type:"noun",
-  category:"History",
-  short:"large ruling state",
-  definition:"A group of territories ruled by one authority.",
-  synonyms:["kingdom","realm","dynasty"],
-  antonyms:["republic"],
-  examples:[
-    "The Roman Empire expanded widely."
-  ],
-  mnemonic:"Empire = emperor ruling lands."
-}
+/* WORDS */
 
-];
+let words = [];
+
+/* CATEGORIES */
 
 const categories = [
 
@@ -947,6 +884,8 @@ const categories = [
 
 ];
 
+/* LISTS */
+
 let lists = [
 
 {
@@ -963,6 +902,31 @@ let lists = [
 
 let favorites = [];
 let selectedWord = null;
+
+/* LOAD WORDS FROM SUPABASE */
+
+async function loadWords(){
+
+  const { data, error } =
+    await supabase
+      .from('words')
+      .select('*');
+
+  if(error){
+
+    console.log(error);
+    return;
+
+  }
+
+  words = data;
+
+  renderCategories();
+  renderFeaturedWords();
+
+}
+
+/* RENDER CATEGORIES */
 
 function renderCategories(){
 
@@ -1003,6 +967,8 @@ function renderCategories(){
   });
 
 }
+
+/* WORD CARD */
 
 function createWordCard(word){
 
@@ -1061,6 +1027,8 @@ function createWordCard(word){
 
 }
 
+/* FEATURED */
+
 function renderFeaturedWords(){
 
   const container =
@@ -1076,6 +1044,8 @@ function renderFeaturedWords(){
   });
 
 }
+
+/* LISTS */
 
 function renderLists(){
 
@@ -1129,6 +1099,8 @@ function renderLists(){
 
 }
 
+/* CATEGORY */
+
 function openCategory(name){
 
   document.getElementById("homePage")
@@ -1155,6 +1127,8 @@ function openCategory(name){
     });
 
 }
+
+/* FAVORITES */
 
 function openFavorites(){
 
@@ -1197,6 +1171,8 @@ function openFavorites(){
 
 }
 
+/* HOME */
+
 function goHome(){
 
   document.getElementById("homePage")
@@ -1206,6 +1182,8 @@ function goHome(){
     .classList.add("hidden");
 
 }
+
+/* OPEN LIST */
 
 function openList(index){
 
@@ -1254,6 +1232,8 @@ function openList(index){
 
 }
 
+/* OPEN WORD */
+
 function openWord(name){
 
   const word =
@@ -1299,12 +1279,16 @@ function openWord(name){
 
 }
 
+/* CLOSE */
+
 function closeModal(){
 
   document.getElementById("wordModal")
     .classList.remove("active");
 
 }
+
+/* CREATE LIST */
 
 function createList(){
 
@@ -1323,6 +1307,8 @@ function createList(){
   renderLists();
 
 }
+
+/* LIST SELECTOR */
 
 function openListSelector(event,wordName){
 
@@ -1360,12 +1346,16 @@ function openListSelector(event,wordName){
 
 }
 
+/* CLOSE LIST */
+
 function closeListModal(){
 
   document.getElementById("listModal")
     .classList.remove("active");
 
 }
+
+/* SAVE TO LIST */
 
 function saveWordToLists(){
 
@@ -1395,6 +1385,8 @@ function saveWordToLists(){
 
 }
 
+/* FAVORITES */
+
 function toggleFavorite(event,wordName){
 
   event.stopPropagation();
@@ -1416,8 +1408,9 @@ function toggleFavorite(event,wordName){
 
 }
 
-renderCategories();
-renderFeaturedWords();
+/* INIT */
+
+loadWords();
 renderLists();
 
 </script>
