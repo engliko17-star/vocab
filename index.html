@@ -838,9 +838,9 @@ body{
 
 </div>
 
-<script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-/* SUPABASE */
+<script>
 
 const SUPABASE_URL =
 'https://esnlflhatbpnmpkfhvsi.supabase.co';
@@ -854,11 +854,7 @@ window.supabase.createClient(
   SUPABASE_KEY
 );
 
-/* WORDS */
-
 let words = [];
-
-/* CATEGORIES */
 
 const categories = [
 
@@ -884,8 +880,6 @@ const categories = [
 
 ];
 
-/* LISTS */
-
 let lists = [
 
 {
@@ -903,30 +897,27 @@ let lists = [
 let favorites = [];
 let selectedWord = null;
 
-/* LOAD WORDS FROM SUPABASE */
-
 async function loadWords(){
 
   const { data, error } =
     await supabase
-      .from('words')
-      .select('*');
+      .from("words")
+      .select("*");
 
   if(error){
 
-    console.log(error);
+    console.error(error);
     return;
 
   }
 
-  words = data;
+  words = data || [];
 
   renderCategories();
   renderFeaturedWords();
+  renderLists();
 
 }
-
-/* RENDER CATEGORIES */
 
 function renderCategories(){
 
@@ -967,8 +958,6 @@ function renderCategories(){
   });
 
 }
-
-/* WORD CARD */
 
 function createWordCard(word){
 
@@ -1027,8 +1016,6 @@ function createWordCard(word){
 
 }
 
-/* FEATURED */
-
 function renderFeaturedWords(){
 
   const container =
@@ -1044,8 +1031,6 @@ function renderFeaturedWords(){
   });
 
 }
-
-/* LISTS */
 
 function renderLists(){
 
@@ -1099,8 +1084,6 @@ function renderLists(){
 
 }
 
-/* CATEGORY */
-
 function openCategory(name){
 
   document.getElementById("homePage")
@@ -1128,8 +1111,6 @@ function openCategory(name){
 
 }
 
-/* FAVORITES */
-
 function openFavorites(){
 
   document.getElementById("homePage")
@@ -1151,17 +1132,6 @@ function openFavorites(){
       w=>favorites.includes(w.word)
     );
 
-  if(favoriteWords.length===0){
-
-    container.innerHTML = `
-      <div class="list-card">
-        No favorite words yet.
-      </div>
-    `;
-
-    return;
-  }
-
   favoriteWords.forEach(word=>{
 
     container.innerHTML +=
@@ -1170,8 +1140,6 @@ function openFavorites(){
   });
 
 }
-
-/* HOME */
 
 function goHome(){
 
@@ -1182,8 +1150,6 @@ function goHome(){
     .classList.add("hidden");
 
 }
-
-/* OPEN LIST */
 
 function openList(index){
 
@@ -1203,17 +1169,6 @@ function openList(index){
 
   container.innerHTML = "";
 
-  if(list.words.length===0){
-
-    container.innerHTML = `
-      <div class="list-card">
-        This list is empty.
-      </div>
-    `;
-
-    return;
-  }
-
   list.words.forEach(wordName=>{
 
     const word =
@@ -1232,12 +1187,12 @@ function openList(index){
 
 }
 
-/* OPEN WORD */
-
 function openWord(name){
 
   const word =
     words.find(w=>w.word===name);
+
+  if(!word) return;
 
   document.getElementById("wordModal")
     .classList.add("active");
@@ -1253,19 +1208,19 @@ function openWord(name){
 
   document.getElementById("modalSynonyms")
     .innerHTML =
-      word.synonyms
+      (word.synonyms || [])
         .map(s=>`<span>${s}</span>`)
         .join("");
 
   document.getElementById("modalAntonyms")
     .innerHTML =
-      word.antonyms
+      (word.antonyms || [])
         .map(a=>`<span>${a}</span>`)
         .join("");
 
   document.getElementById("modalExamples")
     .innerHTML =
-      word.examples
+      (word.examples || [])
         .map(e=>`
           <div class="example">
             ${e}
@@ -1275,11 +1230,9 @@ function openWord(name){
 
   document.getElementById("modalMnemonic")
     .innerText =
-      word.mnemonic;
+      word.mnemonic || "";
 
 }
-
-/* CLOSE */
 
 function closeModal(){
 
@@ -1287,8 +1240,6 @@ function closeModal(){
     .classList.remove("active");
 
 }
-
-/* CREATE LIST */
 
 function createList(){
 
@@ -1307,8 +1258,6 @@ function createList(){
   renderLists();
 
 }
-
-/* LIST SELECTOR */
 
 function openListSelector(event,wordName){
 
@@ -1346,16 +1295,12 @@ function openListSelector(event,wordName){
 
 }
 
-/* CLOSE LIST */
-
 function closeListModal(){
 
   document.getElementById("listModal")
     .classList.remove("active");
 
 }
-
-/* SAVE TO LIST */
 
 function saveWordToLists(){
 
@@ -1385,8 +1330,6 @@ function saveWordToLists(){
 
 }
 
-/* FAVORITES */
-
 function toggleFavorite(event,wordName){
 
   event.stopPropagation();
@@ -1408,12 +1351,9 @@ function toggleFavorite(event,wordName){
 
 }
 
-/* INIT */
-
 loadWords();
-renderLists();
 
-</script>
+  </script>
 
 </body>
 </html>
